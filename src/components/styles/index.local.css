@@ -1,0 +1,117 @@
+.sukientab {
+    display: flex;
+    margin-bottom: 16px;
+}
+
+.sukientab div {
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    opacity: .5;
+}
+
+.active-tab {
+    border-bottom: 2px solid rgb(121, 121, 121);
+    opacity: 1 !important;
+}
+
+.sukientab div h5{
+    font-size: 16px;
+}
+
+.chonsukien {
+    box-shadow: 0 10.5px 5.4px -26px rgba(0, 0, 0, 0.19), 
+    0 18.5px 9px -26px rgba(0, 0, 0, 0.212), 
+    0 25.9px 12.2px -26px rgba(0, 0, 0, 0.209), 
+    0 34.5px 17.1px -26px rgba(0, 0, 0, 0.198), 
+    0 47.3px 26.8px -26px rgba(0, 0, 0, 0.187), 
+    0 70px 46px -26px rgba(0, 0, 0, 0.19);
+    border-radius: 5px;
+    width: 35% !important;
+    padding: 16px 32px !important;
+    background-color: white;
+    margin-bottom: 50px;
+}
+
+.tab {
+    cursor: pointer;
+    position: relative;
+}
+
+.tab img {
+    width: 16px;
+    position: absolute;
+    right: 0;
+    top: -5px;
+}
+
+.timKiemSuKien {
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.timKiemSuKien input {
+    width: 100%;
+    border: none;
+    outline: none;
+}
+
+.sukienlist {
+    margin-bottom: 16px;
+    height: 200px;
+    overflow-y: scroll;
+}
+
+.cascSuKienDaChon {
+    margin-bottom: 16px;
+}
+
+.suKienDaChon {
+    border-radius: 5px;
+    background:rgba(109, 101, 224, 0.187);
+    display: inline-block;
+    padding: 4px 8px;
+    height: 36px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+}
+
+.suKienDaChon div {
+    display: inline-block;
+}
+
+.buttonx {
+    cursor: pointer;
+}
+
+.suKienDaChon img {
+    width: 8px;
+    height: 8px;
+    margin-left: 8px;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+}
+
+.option img {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.option p {
+    margin-bottom: 0;
+}
+
+.button-add {
+    width: 100%;
+    background-color: #4149be;
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
+}

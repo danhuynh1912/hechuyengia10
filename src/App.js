@@ -6,6 +6,7 @@ import Select from 'react-select';
 
 // Component
 import ChonTapSuKien from './components/ChonTapSuKien';
+import Menu from './components/Menu';
 
 const Checkbox = ({ children, ...props }: JSX.IntrinsicElements['input']) => (
   <label style={{ marginRight: '1em' }}>
@@ -127,8 +128,9 @@ function App() {
   }
 
   return (
-    <div className="main">
-      <div className="header">
+    <div className="main row">
+      <Menu />
+      {/* <div className="header">
         <InputGroup>
           <Dropdown isOpen={isDropdownOpen} toggle={() => setIsDropdownOpen(!isDropdownOpen)}>
             <DropdownToggle caret>
@@ -149,7 +151,7 @@ function App() {
             CHỌN SỰ KIỆN
           </Button>
         </InputGroup>
-      </div>
+      </div> */}
       <ChonTapSuKien />
     </div>
     

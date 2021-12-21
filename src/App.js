@@ -4,6 +4,13 @@ import {DropdownItem, Input, InputGroup, Dropdown, DropdownToggle, DropdownMenu,
 import "./App.css";
 import Select from 'react-select';
 
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
+
 // Component
 import ChonTapSuKien from './components/ChonTapSuKien';
 import Menu from './components/Menu';
@@ -152,7 +159,9 @@ function App() {
           </Button>
         </InputGroup>
       </div> */}
-      <ChonTapSuKien />
+      <Routes>
+        <Route path="/" element={<ChonTapSuKien/>} />
+      </Routes>
     </div>
     
   );

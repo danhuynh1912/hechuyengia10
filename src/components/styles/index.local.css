@@ -181,6 +181,32 @@
 /* Menu */
 
 .menu {
-    background-color: #dfeaf5;
+    background-color: #e8ecef;
     border-right: 3px solid rgb(255, 255, 255);
+    padding-left: 40px !important;
+    padding-top: 70px !important;
+}
+
+.menu h3 {
+    opacity: .5;
+    font-weight: bold;
+}
+
+.nav div {
+    width: 100%;
+    margin-top: 16px;
+}
+
+.nav div a {
+    color: rgba(0, 0, 0, 0.589);
+    text-decoration: none !important;
+}
+
+.activeNav {
+    border-right: 3px solid #4149be;
+}
+
+.activeNav a {
+    color: #4149be !important;
+    font-weight: bold;
 }

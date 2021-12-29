@@ -13,6 +13,7 @@ import {
 
 // Component
 import ChonTapSuKien from './components/ChonTapSuKien';
+import TimKiemTapLuat from './components/TimKiemTapLuat';
 import Menu from './components/Menu';
 
 const Checkbox = ({ children, ...props }: JSX.IntrinsicElements['input']) => (
@@ -161,6 +162,9 @@ function App() {
       </div> */}
       <Routes>
         <Route path="/" element={<ChonTapSuKien/>} />
+      </Routes>
+      <Routes>
+        <Route path="/timkiemluat" element={<TimKiemTapLuat/>} />
       </Routes>
     </div>
     

@@ -28,6 +28,9 @@ function Menu() {
                 <div className={pathname === "/timkiemluat" ? "activeNav" : ""} onClick={onClickNav}>
                     <Link to="/timkiemluat">Tìm kiếm tập luật</Link>
                 </div>
+                <div className={pathname === "/timkiemluat" ? "activeNav" : ""} onClick={onClickNav}>
+                    <Link to="/main">Tìm kiếm địa điểm</Link>
+                </div>
             </div>
         </div>
     )

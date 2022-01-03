@@ -8,13 +8,14 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link
+  Link,
 } from "react-router-dom";
 
 // Component
 import ChonTapSuKien from './components/ChonTapSuKien';
 import TimKiemTapLuat from './components/TimKiemTapLuat';
 import Menu from './components/Menu';
+import TimKiemDiaDiem from './components/TimKiemDiaDiem';
 
 const Checkbox = ({ children, ...props }: JSX.IntrinsicElements['input']) => (
   <label style={{ marginRight: '1em' }}>
@@ -165,6 +166,9 @@ function App() {
       </Routes>
       <Routes>
         <Route path="/timkiemluat" element={<TimKiemTapLuat/>} />
+      </Routes>
+      <Routes>
+        <Route path="/main" element={<TimKiemDiaDiem />} />
       </Routes>
     </div>
     

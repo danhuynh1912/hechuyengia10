@@ -1,6 +1,6 @@
 import React from 'react';
 import readXlsxFile from 'read-excel-file';
-import file from './asstes/tinhthanh.xlsx';
+// import file from './asstes/tinhthanh.xlsx';
 
 const initRules = [
     {
@@ -54,10 +54,12 @@ const EVENT = {
 };
 
 function TimKiemDiaDiem() {
-    const [rules, setRules] = React.useState(initRules);
-    const [events, setEvents] = React.useState({});
-    const [hypothesis, setHypothesis] = React.useState([]);
-    const [resultFilter, setResultFilter] = React.useState([]);
+    const [rules, setRules] = React.useState(initRules); // lưu các tập luật được tạo nên từ các sự kiện
+    const [preEvents, setPreEvent] = React.useState([]);
+    const [events, setEvents] = React.useState({}); // lưu các sự kiện, sau khi đã phân loại theo event type
+    const [hypothesis, setHypothesis] = React.useState([]); // lưu giả thiết - các điều kiện lọc người dùng chọn
+    const [resultFilter, setResultFilter] = React.useState([]); // lưu các tập luật thỏa mãn
+    const [output, setOutput] = React.useState([]); // lưu giá trị đích thỏa mãn
 
     // React.useEffect(() => {
     //     debugger;
@@ -90,6 +92,7 @@ function TimKiemDiaDiem() {
             }
             newEvents[`${event[EVENT.KEY]}_${event[EVENT.TYPE]}`].push(event);
         });
+        setPreEvent(rows);
         setEvents(newEvents);
     }
 
@@ -139,13 +142,13 @@ function TimKiemDiaDiem() {
         return lst;
     }
 
-
     function suyDienTien(rules, gt, kl) {
         // Lấy giả thiết lưu vào tập đích
         const td = [...gt];
         // Lấy danh sách tập luật thỏa mãn
         let newRules = filterRules(rules, td);
         const vet = {};
+        const output = [];
         let i = 1;
 
         // Lặp cho đến khi đã duyệt qua hết các tập luật thỏa mãn
@@ -158,17 +161,29 @@ function TimKiemDiaDiem() {
                 if (!vet[i]) {
                     vet[i] = [];
                 }
+                // if (r.right.includes("H")) { // chỉ các luật ko phải luật trung gian mới thêm vào VET
+                //     vet[i].push(r);
+                // }
                 vet[i].push(r);
+                if (r.right.includes("H")) {
+                    output.push(r.right);
+                }
             });
             newRules = filterRules(rules, td);
             i++;
         }
-        return vet;
+        return {vet, output};
     }
 
     const handleFilter = () => {
-        const result = suyDienTien(rules, hypothesis);
-        setResultFilter(result);
+        const {vet, output} = suyDienTien(rules, hypothesis);
+        setResultFilter(vet);
+        setOutput(output);
+    }
+
+    const getEventValue = (eventKey) => {
+        const index = preEvents.findIndex((event) => event[0] === eventKey);
+        return index !== -1 ? preEvents[index][2] : "Loi";
     }
 
     return (
@@ -220,8 +235,17 @@ function TimKiemDiaDiem() {
                                 {
                                     hypothesis.map((event, index) => {
                                         return (
-                                            <React.Fragment key={event}>
-                                                {`${event} ${hypothesis.lenght - 1 !== index ? "^ " : ""}`}
+                                            <React.Fragment key={index}>
+                                                {`${getEventValue(event)} ${hypothesis.length - 1 !== index ? "^ " : " => "}`}
+                                            </React.Fragment>
+                                        );
+                                    })
+                                }
+                                {
+                                    output.map((item, index) => {
+                                        return (
+                                            <React.Fragment key={index}>
+                                                {`${getEventValue(item)} ${output.length - 1 !== index ? "^ " : ";"}`}
                                             </React.Fragment>
                                         );
                                     })
@@ -238,7 +262,7 @@ function TimKiemDiaDiem() {
                                                         const lengthHypo = rule.left.length;
                                                         let index = 0;
                                                         return (
-                                                            <div style={{ padding: "10px 40px", borderBottom: "1px solid #dee2e6", backgroundColor: "#d4edda" }}>
+                                                            <div style={{ padding: "10px 40px", borderBottom: "1px solid #dee2e6", backgroundColor: rule.right.includes("H") ? "#d4edda" : "#ffa8a8" }}>
                                                                 <p style={{ margin: 0 }}>
                                                                     {
                                                                         `R${rule.id}: `
@@ -248,12 +272,12 @@ function TimKiemDiaDiem() {
                                                                             index++;
                                                                             return (
                                                                                 <React.Fragment key={event}>
-                                                                                    {`${event} ${lengthHypo !== index ? "^ " : ""}`}
+                                                                                    {`${getEventValue(event)} ${lengthHypo !== index ? "^ " : ""}`}
                                                                                 </React.Fragment>
                                                                             );
                                                                         })
                                                                     }
-                                                                    {`=> ${rule.right}`}
+                                                                    {`=> ${getEventValue(rule.right)}`}
                                                                 </p>
                                                             </div>
                                                         );

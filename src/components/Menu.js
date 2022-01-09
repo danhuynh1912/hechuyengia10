@@ -20,16 +20,16 @@ function Menu() {
             <h3>Nhóm 10</h3>
             <div className="nav">
                 <div className={pathname === "/" ? "activeNav" : ""} onClick={onClickNav}>
-                    <Link to="/">Thêm tập luật</Link>
+                    <Link to="/">Tìm kiếm địa điểm</Link>
                 </div>
                 <div className={pathname === "/themsukien" ? "activeNav" : ""} onClick={onClickNav}>
                     <Link to="/themsukien">Thêm sự kiện</Link>
                 </div>
-                <div className={pathname === "/timkiemluat" ? "activeNav" : ""} onClick={onClickNav}>
+                {/* <div className={pathname === "/timkiemluat" ? "activeNav" : ""} onClick={onClickNav}>
                     <Link to="/timkiemluat">Tìm kiếm tập luật</Link>
-                </div>
-                <div className={pathname === "/timkiemluat" ? "activeNav" : ""} onClick={onClickNav}>
-                    <Link to="/main">Tìm kiếm địa điểm</Link>
+                </div> */}
+                <div className={pathname === "/themluat" ? "activeNav" : ""} onClick={onClickNav}>
+                    <Link to="/themluat">Thêm tập luật</Link>
                 </div>
             </div>
         </div>

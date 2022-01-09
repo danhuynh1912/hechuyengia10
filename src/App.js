@@ -12,7 +12,7 @@ import {
 } from "react-router-dom";
 
 // Component
-import ChonTapSuKien from './components/ChonTapSuKien';
+import ThemTapLuat from './components/ThemTapLuat';
 import TimKiemTapLuat from './components/TimKiemTapLuat';
 import Menu from './components/Menu';
 import TimKiemDiaDiem from './components/TimKiemDiaDiem';
@@ -162,13 +162,13 @@ function App() {
         </InputGroup>
       </div> */}
       <Routes>
-        <Route path="/" element={<ChonTapSuKien/>} />
+        <Route path="/" element={<TimKiemDiaDiem />} />
       </Routes>
-      <Routes>
+      {/* <Routes>
         <Route path="/timkiemluat" element={<TimKiemTapLuat/>} />
-      </Routes>
+      </Routes> */}
       <Routes>
-        <Route path="/main" element={<TimKiemDiaDiem />} />
+        <Route path="/themluat" element={<ThemTapLuat />} />
       </Routes>
     </div>
     

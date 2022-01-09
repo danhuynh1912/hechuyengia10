@@ -1,5 +1,6 @@
 import React from 'react';
 import readXlsxFile from 'read-excel-file';
+// import readXlsxFile from 'read-excel-file/node';
 // import file from './asstes/tinhthanh.xlsx';
 
 const initRules = [
@@ -53,21 +54,44 @@ const EVENT = {
     TYPE: 3,
 };
 
+
+const saveDataType = {
+    RULES: "rules",
+    EVENTS: "events",
+}
+
+const getDataFromLocalStorage = (type) => {
+    return JSON.parse(localStorage.getItem(type));
+}
+
+const setDataFromLocalStorage = (type, data) => {
+    localStorage.setItem(type, JSON.stringify(data));
+}
+
+export {
+    saveDataType,
+    getDataFromLocalStorage,
+    setDataFromLocalStorage,
+}
+
 function TimKiemDiaDiem() {
-    const [rules, setRules] = React.useState(initRules); // lưu các tập luật được tạo nên từ các sự kiện
+    const [rules, setRules] = React.useState([]); // lưu các tập luật được tạo nên từ các sự kiện
     const [preEvents, setPreEvent] = React.useState([]);
     const [events, setEvents] = React.useState({}); // lưu các sự kiện, sau khi đã phân loại theo event type
     const [hypothesis, setHypothesis] = React.useState([]); // lưu giả thiết - các điều kiện lọc người dùng chọn
     const [resultFilter, setResultFilter] = React.useState([]); // lưu các tập luật thỏa mãn
     const [output, setOutput] = React.useState([]); // lưu giá trị đích thỏa mãn
 
-    // React.useEffect(() => {
-    //     debugger;
-    //     readXlsxFile(file).then((rows) => {
-    //         debugger;
-    //     });
-    //     debugger;
-    // });
+    React.useEffect(() => {
+        const rules = getDataFromLocalStorage(saveDataType.RULES);
+        const events = getDataFromLocalStorage(saveDataType.EVENTS);
+        if (rules && rules.length > 0) {
+            rulesRefactorData(rules);
+        }
+        if (events && events.length > 0) {
+            eventsRefactorData(events);
+        }
+    }, []);
 
     const rulesRefactorData = (rows) => {
         let index = -1;
@@ -98,12 +122,14 @@ function TimKiemDiaDiem() {
 
     const onLoadRules = (e) => {
         readXlsxFile(e.target.files[0]).then((rows) => {
+            setDataFromLocalStorage(saveDataType.RULES, rows);
             rulesRefactorData(rows);
         });
     }
 
     const onLoadEvents = (e) => {
         readXlsxFile(e.target.files[0]).then((rows) => {
+            setDataFromLocalStorage(saveDataType.EVENTS, rows)
             eventsRefactorData(rows);
         });
     }
@@ -185,13 +211,20 @@ function TimKiemDiaDiem() {
         const index = preEvents.findIndex((event) => event[0] === eventKey);
         return index !== -1 ? preEvents[index][2] : "Loi";
     }
-
+    const test = Object.keys(events).length === 0 || rules.length === 0;
+    debugger;
     return (
         <div className="col-10">
-            <p>load tập luật luật</p>
-            <input type="file" onChange={onLoadRules} />
-            <p>load sự kiện</p>
-            <input type="file" onChange={onLoadEvents} />
+            {
+                (Object.keys(events).length === 0 || rules.length === 0) && (
+                    <React.Fragment>
+                        <p>load tập luật luật</p>
+                        <input type="file" onChange={onLoadRules} />
+                        <p>load sự kiện</p>
+                        <input type="file" onChange={onLoadEvents} />
+                    </React.Fragment>
+                )
+            }
             <div className='main-content'>
                 <h1 style={{ fontSize: 30, marginBottom: 40 }}>Tìm kiếm địa điểm</h1>
                 <div className='box-select-event'>

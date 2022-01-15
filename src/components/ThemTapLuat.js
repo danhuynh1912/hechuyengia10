@@ -26,6 +26,7 @@ function ThemTapLuat() {
     const [tapKetQua, setTapKetQua] = useState([]);
     const [dangChon, setDangChon] = useState(0);
     const [rules, setRules] = React.useState([]);
+    const addEvent = React.useRef(null);
 
     const reset = () => {
         setTabActive(1);
@@ -65,6 +66,95 @@ function ThemTapLuat() {
         if (checkDaChonSuKien(soLuongNguoi)) setTabActive(7);
         if (checkDaChonSuKien(loaiHinh)) setTabActive(0);
     }, [tapSuKien])
+
+    const handleEnter = (e) => {
+        // an nut Enter
+        if (e.which === 13) {
+            const value = addEvent.current.value;
+            let templateEvent;
+            let events;
+            if (dangChon === 1) {
+                events = [...diaDiem];
+                templateEvent = [...events[events.length - 1]];
+                templateEvent[0] = `H${events.length + 1}`;
+                templateEvent[2] = value;
+                events.push(templateEvent);
+                setDiaDiem(events);
+                addEvent.current.value = '';
+                // Xử lý thêm event vào localStorage
+                const eventsOld = getDataFromLocalStorage(saveDataType.EVENTS);
+                eventsOld.push(templateEvent);
+                setDataFromLocalStorage(saveDataType.EVENTS, eventsOld);
+                return;
+            }
+            switch (tabActive) {
+                case 1:
+                    events = [...tinhThanh];
+                    templateEvent = [...events[events.length - 1]];
+                    templateEvent[0] = `A${events.length + 1}`;
+                    templateEvent[2] = value;
+                    events.push(templateEvent);
+                    setTinhThanh(events);
+                    break;
+                case 2:
+                    events = [...thoiGian];
+                    templateEvent = [...events[events.length - 1]];
+                    templateEvent[0] = `B${events.length + 1}`;
+                    templateEvent[2] = value;
+                    events.push(templateEvent);
+                    setThoiGian(events);
+                    break;
+                case 3:
+                    events = [...phuongTien];
+                    templateEvent = [...events[events.length - 1]];
+                    templateEvent[0] = `C${events.length + 1}`;
+                    templateEvent[2] = value;
+                    events.push(templateEvent);
+                    setPhuongTien(events);
+                    break;
+                case 4:
+                    events = [...mua];
+                    templateEvent = [...events[events.length - 1]];
+                    templateEvent[0] = `D${events.length + 1}`;
+                    templateEvent[2] = value;
+                    events.push(templateEvent);
+                    setMua(events);
+                    break;
+                case 5:
+                    events = [...chiPhi];
+                    templateEvent = [...events[events.length - 1]];
+                    templateEvent[0] = `E${events.length + 1}`;
+                    templateEvent[2] = value;
+                    events.push(templateEvent);
+                    setChiPhi(events);
+                    break;
+                case 6:
+                    events = [...soLuongNguoi];
+                    templateEvent = [...events[events.length - 1]];
+                    templateEvent[0] = `F${events.length + 1}`;
+                    templateEvent[2] = value;
+                    events.push(templateEvent);
+                    setSoLuongNguoi(events);
+                    break;
+                case 7:
+                    events = [...loaiHinh];
+                    templateEvent = [...events[events.length - 1]];
+                    templateEvent[0] = `I${events.length + 1}`;
+                    templateEvent[2] = value;
+                    events.push(templateEvent);
+                    setLoaiHinh(events);
+                    break;
+                default:
+                    debugger;
+                    break;
+            }
+            // Xử lý thêm event vào localStorage
+            const eventsOld = getDataFromLocalStorage(saveDataType.EVENTS);
+            eventsOld.push(templateEvent);
+            setDataFromLocalStorage(saveDataType.EVENTS, eventsOld);
+            addEvent.current.value = '';
+        }
+    }
 
     const checkExist = (event) => {
         return tapSuKien.findIndex((item) => {
@@ -182,7 +272,7 @@ function ThemTapLuat() {
                         </div>}
                     </div>
                     <div className="timKiemSuKien">
-                        <input type="text" placeholder="Nhập sự kiện" />
+                        <input type="text" placeholder="Thêm sự kiện" ref={addEvent} onKeyDown={handleEnter} />
                     </div>
                     <div className="sukienlist row">
                         {
